@@ -48,7 +48,7 @@ This project investigates transcriptomic differences in both a parasitic organis
 
 ---
 
-##  Visualisation
+##  Data Visualisation
 ### PCA
 ![PCA](figures/pca_plot.png)
 
@@ -118,7 +118,7 @@ This project investigates transcriptomic differences in both a parasitic organis
 
 ---
 
-##  Visualisation
+##  Data Visualisation
 
 ### PCA
 ![PCA Human](figures/pca_male_female.png)
@@ -217,7 +217,7 @@ Enriched processes:
 
 ## Conclusion
 
-This project demonstrates two complete RNA-Seq workflows and highlights biologically meaningful differences in gene expression across different conditions and systems.
+This project demonstrates two comprehensive RNA-Seq workflows and highlights biologically meaningful differences in gene expression across different conditions and systems. These findings highlight the importance of transcriptomic analysis in understanding biological variation across species and conditions.
 
 ---
 
