@@ -237,6 +237,9 @@ This project demonstrates two complete RNA-Seq workflows and highlights biologic
 ## Authors
 
 Sahar Naeemi mbxsn4@nottingham.ac.uk
+
 Christopher Janschke mbxcj2@nottingham.ac.uk
+
 Mengchan Liu alyml51@nottingham.ac.uk
+
 MSc Bioinformatics – University of Nottingham  
