@@ -49,7 +49,6 @@ This project investigates transcriptomic differences in both a parasitic organis
 ---
 
 ##  Visualisation
-
 ### PCA
 ![PCA](figures/pca_plot.png)
 
