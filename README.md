@@ -3,9 +3,9 @@
 MSc Bioinformatics – University of Nottingham
 
 ## Overview
+This project presents a complete RNA-seq analysis workflow, from raw sequencing data to biological interpretation.
 
-This project presents a complete RNA-seq analysis workflow, including:
-
+The pipeline includes:
 - Quality control (FastQC)
 - Read trimming (Trim Galore)
 - Alignment to reference genome (STAR)
@@ -14,9 +14,23 @@ This project presents a complete RNA-seq analysis workflow, including:
 - Functional enrichment analysis
 
 Two datasets were analysed:
-
 - Trypanosoma dataset: comparison between Fat and Blood samples
 - Human dataset: comparison between Male and Female samples
+
+The aim of this project is to identify differentially expressed genes and interpret their biological significance using downstream analyses such as PCA, heatmaps, volcano plots, and GO enrichment.
+
+## Repository Structure
+
+RNAseq-Rotation2/
+```
+├── data/         # Processed data (counts matrix and metadata used for analysis)
+├── scripts/      # Analysis scripts (QC, trimming, alignment, counting, DESeq2)
+├── results/      # Output files (counts, differential expression results)
+├── figures/      # Plots (PCA, heatmaps, volcano, GO)
+├── environment/  # Environment/configuration files
+└── README.md     # Project description
+
+```
 
 ---
 
@@ -49,10 +63,38 @@ Each script represents one stage of the RNA-seq pipeline.
 
 ## Data
 
-- Raw sequencing data (FASTQ files) were used as input  
-- Reference genome and annotation files were used for alignment and counting  
+- Processed count matrices and metadata are included in the `data/` directory
+- Raw sequencing data (FASTQ files) were used for analysis but are not included due to size limitations
+- Reference genome and annotation files were used for alignment and counting
 
-(Note: Raw data are not included in this repository due to size limitations)
+
+
+---
+
+## Environment
+
+This analysis was performed using the following tools and software:
+
+- FastQC
+- Trim Galore
+- STAR
+- HTSeq
+- R (DESeq2 package via Bioconductor)
+
+Recommended setup:
+
+- R version ≥ 4.0
+- DESeq2 package installed via Bioconductor
+
+Example installation in R:
+
+```r
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("DESeq2")
+```
+
 
 ---
 
@@ -68,25 +110,15 @@ Results are stored in the `figures/` directory and include:
 
 ---
 
-
 ## Reproducibility
 
 To reproduce this analysis:
 
-1. Run quality control:
-   bash scripts/qc_fastqc.sh
-
-2. Trim reads:
-   bash scripts/trim_galore.sh
-
-3. Align reads:
-   bash scripts/star_alignment.sh
-
-4. Count reads:
-   bash scripts/htseq_count.sh
-
-5. Run differential expression analysis:
-   Rscript scripts/deseq2_analysis.R
+1. Run quality control: bash scripts/qc_fastqc.sh
+2. Trim reads: bash scripts/trim_galore.sh
+3. Align reads: bash scripts/star_alignment.sh
+4. Count reads: bash scripts/htseq_count.sh
+5. Run differential expression analysis: Rscript scripts/deseq2_analysis.R
 
 ---
 
