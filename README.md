@@ -1,223 +1,95 @@
-#  RNA-Seq Analysis – Rotation 2  Group 3
-**Comparative Transcriptomics in Trypanosoma brucei and Human Cancer**
+
+# RNA-seq Analysis Project
+MSc Bioinformatics – University of Nottingham
+
+## Overview
+
+This project presents a complete RNA-seq analysis workflow, including:
+
+- Quality control (FastQC)
+- Read trimming (Trim Galore)
+- Alignment to reference genome (STAR)
+- Gene quantification (HTSeq)
+- Differential gene expression analysis (DESeq2)
+- Functional enrichment analysis
+
+Two datasets were analysed:
+
+- Trypanosoma dataset: comparison between Fat and Blood samples
+- Human dataset: comparison between Male and Female samples
 
 ---
 
-##  Introduction
+## Workflow
 
-RNA sequencing (RNA-seq) is a powerful technique used to quantify gene expression across the transcriptome. By mapping sequencing reads to a reference genome, it is possible to identify differences in gene expression between biological conditions.
+The analysis was performed in the following steps:
 
-This project investigates transcriptomic differences in both a parasitic organism (*Trypanosoma brucei*) and human cancer samples.
-
----
-
-##  Objectives
-
-### Trypanosoma brucei
-- Compare gene expression between Blood and Fat samples  
-- Identify differentially expressed genes  
-- Investigate adaptation to different host environments  
-
-### Human Lung Adenocarcinoma
-- Compare gene expression between Male and Female samples  
-- Identify sex-specific transcriptional differences  
-- Perform Gene Ontology (GO) enrichment analysis  
-- Interpret biological pathways  
+1. Quality control of raw reads using FastQC  
+2. Adapter trimming and quality filtering using Trim Galore  
+3. Alignment of reads to the reference genome using STAR  
+4. Counting reads mapped to genes using HTSeq  
+5. Differential expression analysis using DESeq2  
+6. Visualisation and downstream analysis (PCA, heatmaps, volcano plots)
 
 ---
 
-#  PART 1 — Trypanosoma brucei (Blood vs Fat)
+## Scripts
 
-##  Methods
+All analysis scripts are located in the `scripts/` directory:
 
-- Raw RNA-seq reads were quality checked using **FastQC**  
-- Reads were trimmed using **Trim Galore** to remove adapters and low-quality bases  
-- Reads were aligned to the *T. brucei* reference genome using **Bowtie2 / STAR**  
-- Alignment files were processed using **SAMtools** (sorting and indexing)  
-- Gene-level counts were generated using **HTSeq-count**  
-- Differential expression analysis was performed using **DESeq2**  
+- `qc_fastqc.sh` → runs FastQC for quality control  
+- `trim_galore.sh` → trims adapters and low-quality reads  
+- `star_alignment.sh` → aligns reads to reference genome  
+- `htseq_count.sh` → counts reads per gene  
+- `deseq2_analysis.R` → performs differential expression analysis  
 
----
-
-##  Results
-
-- ~11,764 genes analysed  
-- **2,316 significantly differentially expressed genes**  
-- 1,533 upregulated in Fat  
-- 1,324 downregulated in Fat  
+Each script represents one stage of the RNA-seq pipeline.
 
 ---
 
-##  Data Visualisation
-### PCA
-![PCA](figures/pca_plot.png)
+## Data
 
-- PC1 explains 61% variance  
-- Strong separation between Blood and Fat  
-- One potential outlier (Blood6)
+- Raw sequencing data (FASTQ files) were used as input  
+- Reference genome and annotation files were used for alignment and counting  
 
----
-
-### Sample Distance Heatmap
-![Sample Distance](figures/sample_distance_heatmap.png)
-
-- Clear clustering by condition  
-- High consistency within Fat samples  
+(Note: Raw data are not included in this repository due to size limitations)
 
 ---
 
-### Volcano Plot
-![Volcano](figures/volcano_plot.png)
+## Results
 
-- Clear separation of up/downregulated genes  
-- Strong biological signal  
+Results are stored in the `figures/` directory and include:
 
----
-
-### MA Plot
-![MA](figures/ma_plot.png)
-
-- Most genes centered around log2FC = 0  
-- Significant genes highlighted  
+- PCA plots (sample clustering)
+- Heatmaps (expression patterns)
+- Volcano plots (differential expression)
+- MA plots
+- Functional enrichment plots (GO analysis)
 
 ---
 
-## Biological Insights
+## Reproducibility
 
-- Strong transcriptomic differences between Blood and Fat environments  
-- Fat samples show consistent clustering  
-- Trypanosomes exhibit:
-  - Polycistronic transcription  
-  - Directional gene organisation  
-  - Post-transcriptional regulation  
+To reproduce this analysis:
 
----
+## Reproducibility
 
-#  PART 2 — Human RNA-Seq (Male vs Female)
+To reproduce this analysis:
 
-##  Methods
+1. Run quality control:
+   bash scripts/qc_fastqc.sh
 
-- RNA-seq reads were aligned to the human reference genome (GRCh38) using **STAR**  
-- Gene counts were generated directly during alignment  
-- A count matrix was constructed for all samples  
-- Differential expression analysis was performed using **DESeq2**  
-- Gene annotation was performed using **org.Hs.eg.db**  
-- Gene Ontology enrichment analysis was conducted using **clusterProfiler**  
-- Results were validated using **GOrilla**  
+2. Trim reads:
+   bash scripts/trim_galore.sh
 
----
+3. Align reads:
+   bash scripts/star_alignment.sh
 
-##  Results
+4. Count reads:
+   bash scripts/htseq_count.sh
 
-- ~62,754 genes analysed  
-- **5,627 significantly different genes (FDR < 0.05)**  
-
-### Upregulated:
-- Male: ~2,503 genes  
-- Female: ~3,124 genes  
-
----
-
-##  Data Visualisation
-
-### PCA
-![PCA Human](figures/pca_male_female.png)
-
-- PC1 explains 59% variance  
-- Clear separation between sexes  
-- Sex is dominant transcriptional factor  
-
----
-
-### Heatmap (Top 30 Genes)
-![Heatmap](figures/heatmap_male_female.png)
-
-- Strong clustering by sex  
-- Confirms DESeq2 results  
-
----
-
-### Volcano Plot
-![Volcano](figures/volcano_male_female.png)
-
-- Balanced upregulation in both sexes  
-- Strong statistical significance  
-
----
-
-### MA Plot
-![MA](figures/ma_male_female.png)
-
-- Symmetrical distribution  
-- Strong differential signal  
-
----
-
-##  Key Biological Findings
-
-### Chromosomal Signals
-
-- Male-upregulated genes include:
-  - KDM5D, DDX3Y, UTY, EIF1AY, RPS4Y1  
-- Female-upregulated gene:
-  - XIST  
-
----
-
-##  GO Enrichment Analysis
-
-### Male-Upregulated Genes
-![GO Male](figures/go_male.png)
-
-Enriched processes:
-- Immunoglobulin-mediated immune response  
-- B cell activation  
-- Complement activation  
-- Immune signaling pathways  
-
----
-
-### Female-Upregulated Genes
-![GO Female](figures/go_female.png)
-
-Enriched processes:
-- Angiogenesis  
-- Vasculature development  
-- Cytokine regulation  
-- Keratinization  
-
----
-
-### GO DAG (GOrilla)
-![GO DAG](figures/go_dag.png)
-
-- Strong clustering of immune-related pathways  
-- Confirms enrichment analysis  
-
----
-
-##  Biological Interpretation
-
-- Male tumours show enhanced immune-related activity  
-- Female tumours show enhanced angiogenesis and cytokine regulation  
-- Sex is a major driver of transcriptomic variation  
-
----
-
-#  Repository Structure
-
-
-├── data/
-├── scripts/
-├── results/
-├── figures/
-└── README.md
-
----
-
-## Conclusion
-
-This project demonstrates two comprehensive RNA-Seq workflows and highlights biologically meaningful differences in gene expression across different conditions and systems. These findings highlight the importance of transcriptomic analysis in understanding biological variation across species and conditions.
+5. Run differential expression analysis:
+   Rscript scripts/deseq2_analysis.R
 
 ---
 
@@ -225,20 +97,16 @@ This project demonstrates two comprehensive RNA-Seq workflows and highlights bio
 
 - FastQC  
 - Trim Galore  
-- Bowtie2 / STAR  
-- SAMtools  
+- STAR  
 - HTSeq  
-- R (DESeq2, pheatmap, clusterProfiler)  
-- GOrilla  
+- DESeq2  
 
 ---
 
 ## Authors
 
-Sahar Naeemi mbxsn4@nottingham.ac.uk
+Sahar Naeemi (mbxsn4@nottingham.ac.uk)  
+Christopher Janschke (mbxcj2@nottingham.ac.uk)  
+Mengchan Liu (alyml51@nottingham.ac.uk)
 
-Christopher Janschke mbxcj2@nottingham.ac.uk
-
-Mengchan Liu alyml51@nottingham.ac.uk
-
-MSc Bioinformatics – University of Nottingham  
+MSc Bioinformatics — University of Nottingham
