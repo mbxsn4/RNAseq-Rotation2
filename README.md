@@ -68,9 +68,6 @@ Results are stored in the `figures/` directory and include:
 
 ---
 
-## Reproducibility
-
-To reproduce this analysis:
 
 ## Reproducibility
 
